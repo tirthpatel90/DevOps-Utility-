@@ -376,6 +376,136 @@ document.querySelectorAll('.ws-tab').forEach(tab => {
     });
 });
 
+// ===== LINE NUMBERS FOR JSON =====
+const jsonInput = document.getElementById('jsonInput');
+const jsonLineNumbers = document.getElementById('jsonLineNumbers');
+
+function updateJsonLineNumbers() {
+    if(!jsonInput || !jsonLineNumbers) return;
+    const lines = jsonInput.value.split('\n').length;
+    jsonLineNumbers.innerHTML = Array.from({ length: lines }, (_, i) => i + 1).join('<br>');
+}
+if(jsonInput) {
+    jsonInput.addEventListener('input', updateJsonLineNumbers);
+    jsonInput.addEventListener('scroll', () => {
+        if(jsonLineNumbers) jsonLineNumbers.scrollTop = jsonInput.scrollTop;
+    });
+}
+
+// ===== JSON VALIDATOR =====
+document.getElementById('jsonSample')?.addEventListener('click', () => {
+    if(!jsonInput) return;
+    jsonInput.value = `{
+  "projectName": "DevOps Utility Hub",
+  "version": "1.0.0",
+  "features": [
+    "YAML Validator",
+    "JSON Validator",
+    "Docker Generator"
+  ],
+  "author": {
+    "name": "Hitesh",
+    "role": "DevOps Engineer"
+  },
+  "isClientSide": true,
+  "dependencies": null
+}`;
+    updateJsonLineNumbers();
+});
+
+document.getElementById('jsonClear')?.addEventListener('click', () => {
+    if(!jsonInput) return;
+    jsonInput.value = '';
+    const outputArea = document.getElementById('jsonOutput');
+    const resultDiv = document.getElementById('jsonResult');
+    if(outputArea) {
+        outputArea.value = '';
+        outputArea.classList.add('hidden');
+    }
+    if(resultDiv) {
+        resultDiv.innerHTML = '<div class="result-placeholder"><i class="fas fa-arrow-left"></i><p>Enter JSON and click Validate</p></div>';
+        resultDiv.style.display = '';
+    }
+    updateJsonLineNumbers();
+});
+
+document.getElementById('jsonValidate')?.addEventListener('click', () => {
+    if(!jsonInput) return;
+    const input = jsonInput.value.trim();
+    const resultDiv = document.getElementById('jsonResult');
+    const outputArea = document.getElementById('jsonOutput');
+
+    if (!input) {
+        if(resultDiv) {
+            resultDiv.style.display = '';
+            resultDiv.innerHTML = '<div class="yaml-error"><div class="error-title"><i class="fas fa-exclamation-triangle"></i> No Input</div><div class="error-detail">Please paste some JSON content first.</div></div>';
+        }
+        if(outputArea) outputArea.classList.add('hidden');
+        return;
+    }
+
+    try {
+        const parsed = JSON.parse(input);
+        const activeTabEl = document.querySelector('.ws-tab-json.active');
+        const activeTab = activeTabEl ? activeTabEl.getAttribute('data-tab') : 'validate';
+
+        let output = '';
+        if (activeTab === 'minify') {
+            output = JSON.stringify(parsed);
+        } else {
+            output = JSON.stringify(parsed, null, 2);
+        }
+
+        const lineCount = input.split('\n').length;
+        const charCount = input.length;
+        const type = Array.isArray(parsed) ? 'Array' : (parsed === null ? 'Null' : typeof parsed);
+        const keys = parsed && typeof parsed === 'object' ? Object.keys(parsed).length : 0;
+
+        if(resultDiv) {
+            resultDiv.style.display = '';
+            resultDiv.innerHTML = `
+                <div class="yaml-valid"><i class="fas fa-check-circle"></i> Valid JSON!</div>
+                <div class="yaml-info">
+                    <div class="yaml-info-item"><div class="label">Lines</div><div class="value">${lineCount}</div></div>
+                    <div class="yaml-info-item"><div class="label">Characters</div><div class="value">${charCount}</div></div>
+                    <div class="yaml-info-item"><div class="label">Type</div><div class="value">${type}</div></div>
+                    <div class="yaml-info-item"><div class="label">Top Keys</div><div class="value">${keys}</div></div>
+                </div>
+            `;
+        }
+        
+        if (activeTab !== 'validate') {
+            if(resultDiv) resultDiv.style.display = 'none';
+            if(outputArea) {
+                outputArea.classList.remove('hidden');
+                outputArea.value = output;
+            }
+        } else {
+            if(outputArea) outputArea.classList.add('hidden');
+        }
+
+    } catch (e) {
+        if(resultDiv) {
+            resultDiv.style.display = '';
+            resultDiv.innerHTML = `
+                <div class="yaml-error">
+                    <div class="error-title"><i class="fas fa-times-circle"></i> Invalid JSON</div>
+                    <div class="error-detail">${e.message}</div>
+                </div>
+            `;
+        }
+        if(outputArea) outputArea.classList.add('hidden');
+    }
+});
+
+// JSON tabs
+document.querySelectorAll('.ws-tab-json').forEach(tab => {
+    tab.addEventListener('click', () => {
+        document.querySelectorAll('.ws-tab-json').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+    });
+});
+
 // ===== YAML ↔ JSON CONVERTER =====
 document.getElementById('yamlToJson').addEventListener('click', () => {
     const yamlText = document.getElementById('converterYaml').value.trim();

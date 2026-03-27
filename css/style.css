@@ -704,7 +704,7 @@ body {
     gap: 4px;
 }
 
-.ws-tab {
+.ws-tab, .ws-tab-json {
     padding: 8px 16px;
     background: transparent;
     border: 1px solid transparent;
@@ -717,7 +717,7 @@ body {
     transition: var(--transition);
 }
 
-.ws-tab.active, .ws-tab:hover {
+.ws-tab.active, .ws-tab:hover, .ws-tab-json.active, .ws-tab-json:hover {
     background: rgba(108, 92, 231, 0.15);
     color: var(--accent-light);
     border-color: var(--accent);
