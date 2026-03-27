@@ -37,6 +37,7 @@
                 <a href="#home" class="nav-link active"><i class="fas fa-home"></i> Home</a>
                 <a href="#tools" class="nav-link"><i class="fas fa-tools"></i> Tools</a>
                 <a href="#yaml" class="nav-link"><i class="fas fa-code"></i> YAML</a>
+                <a href="#json" class="nav-link"><i class="fas fa-brackets-curly"></i> JSON</a>
                 <a href="#docker" class="nav-link"><i class="fab fa-docker"></i> Docker</a>
                 <a href="#yaml-json" class="nav-link"><i class="fas fa-exchange-alt"></i> Converters</a>
                 <a href="#docker" class="nav-link"><i class="fas fa-cogs"></i> Generators</a>
@@ -127,6 +128,12 @@
                     <div class="tool-icon yaml-icon"><i class="fas fa-file-code"></i></div>
                     <h3>YAML Validator</h3>
                     <p>Validate & format YAML with detailed error reporting</p>
+                    <span class="tool-tag">Validation</span>
+                </a>
+                <a href="#json" class="tool-card" data-tool="json">
+                    <div class="tool-icon json-icon"><i class="fas fa-file-code"></i></div>
+                    <h3>JSON Validator</h3>
+                    <p>Validate, format & minify JSON with ease</p>
                     <span class="tool-tag">Validation</span>
                 </a>
                 <a href="#yaml-json" class="tool-card" data-tool="converter">
@@ -256,6 +263,62 @@ spec:
                             </div>
                         </div>
                         <textarea id="yamlOutput" class="editor-textarea hidden" readonly spellcheck="false"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JSON VALIDATOR & FORMATTER -->
+    <section id="json" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge"><i class="fas fa-file-code"></i> JSON Tools</span>
+                <h2 class="section-title">JSON <span class="gradient-text">Validator</span> & Formatter</h2>
+                <p class="section-desc">Paste your JSON and validate, format, or minify it instantly.</p>
+            </div>
+            <div class="tool-workspace">
+                <div class="workspace-header">
+                    <div class="workspace-tabs">
+                        <button class="ws-tab-json active" data-tab="validate">Validate</button>
+                        <button class="ws-tab-json" data-tab="format">Format</button>
+                        <button class="ws-tab-json" data-tab="minify">Minify</button>
+                    </div>
+                    <div class="workspace-actions">
+                        <button class="ws-btn" id="jsonSample"><i class="fas fa-file-import"></i> Sample</button>
+                        <button class="ws-btn" id="jsonClear"><i class="fas fa-trash"></i> Clear</button>
+                        <button class="ws-btn primary" id="jsonValidate"><i class="fas fa-check"></i> Validate</button>
+                    </div>
+                </div>
+                <div class="workspace-body">
+                    <div class="editor-panel">
+                        <div class="editor-header">
+                            <span><i class="fas fa-edit"></i> Input JSON</span>
+                            <button class="copy-btn" data-target="jsonInput"><i class="fas fa-copy"></i></button>
+                        </div>
+                        <div class="editor-wrapper">
+                            <div class="line-numbers" id="jsonLineNumbers">1</div>
+                            <textarea id="jsonInput" class="editor-textarea" placeholder='Paste your JSON here...
+Example:
+{
+  "name": "DevOps Hub",
+  "tools": ["YAML", "Docker", "Network"],
+  "free": true
+}' spellcheck="false"></textarea>
+                        </div>
+                    </div>
+                    <div class="result-panel">
+                        <div class="editor-header">
+                            <span><i class="fas fa-check-circle"></i> Result</span>
+                            <button class="copy-btn" data-target="jsonOutput"><i class="fas fa-copy"></i></button>
+                        </div>
+                        <div id="jsonResult" class="result-content">
+                            <div class="result-placeholder">
+                                <i class="fas fa-arrow-left"></i>
+                                <p>Enter JSON and click Validate</p>
+                            </div>
+                        </div>
+                        <textarea id="jsonOutput" class="editor-textarea hidden" readonly spellcheck="false"></textarea>
                     </div>
                 </div>
             </div>
