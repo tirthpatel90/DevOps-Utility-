@@ -19,4 +19,4 @@ A collection of 12+ essential tools for DevOps engineers, built with pure HTML, 
    ```
 
 ---
-Built by **Hitesh** | [GitHub](https://github.com/hitesh0106/DevOps-Utility-)
+Built by **Hitesh** **Tirth** 
